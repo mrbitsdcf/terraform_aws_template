@@ -1,0 +1,11 @@
+## Auto generated backend.tf ##
+## Updated on: {{ timestamp }} ##
+
+terraform {
+  backend "s3" {
+    region = "{{ aws_region }}"
+    bucket = "{{ bucket_name }}"
+    key= "{{ key_name }}.tfstate"
+    encrypt = true
+  }
+}

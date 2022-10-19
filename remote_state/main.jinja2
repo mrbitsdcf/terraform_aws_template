@@ -1,0 +1,13 @@
+## Auto generated main.tf ##
+## Updated on: {{ timestamp }} ##
+
+locals {
+  aws_region  = "{{ aws_region }}"
+  aws_account = "{{ account_id }}"
+  prefix      = "{{ prefix }}"
+  ssm_prefix  = "/org/{{ prefix }}/terraform"
+  common_tags = {
+    Project   = "{{ prefix }}"
+    ManagedBy = "Terraform"
+  }
+}
