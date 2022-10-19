@@ -1,8 +1,8 @@
 Terraform AWS Template
 ======================
 
-Initial Terraform 
------------------
+Initial Terraform template for AWS IaC projects
+-----------------------------------------------
 
 This repository intends to be a pattern, a start, to create a modular infrastructure-as-code project using Terraform in AWS, following the best practices when using S3 remote backend for Terraform states. 
 
