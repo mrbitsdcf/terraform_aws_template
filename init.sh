@@ -9,8 +9,6 @@
 #
 # AWS credentials must be set already.
 
-set -e
-
 . ./lib/common.sh
 
 date_msg "Starting Terraform project configuration"
@@ -19,7 +17,7 @@ TIMESTAMP=$(date +%F-%T)
 AWS_ID=$(aws sts get-caller-identity)
 ACCOUNT_ID=$(aws sts get-caller-identity --query 'Account' --out text)
 [[ $AWS_REGION ]] || AWS_REGION=us-east-1
-BUCKET_NAME="terraform-${AWS_REGION}-${ACCOUNT_ID}"
+BUCKET_NAME="remote-state-${AWS_REGION}-${ACCOUNT_ID}"
 KEY_NAME="INVALID"
 PREFIX="INVALID"
 
@@ -34,13 +32,12 @@ if [ $? -gt 0 ] ; then
   date_msg "Creating S3 Bucket ${BUCKET_NAME} into Account ${ACCOUNT_ID} for remote_state IaC."
   aws s3 mb s3://${BUCKET_NAME} --region=${AWS_REGION}
 fi
-date_msg "Initializing module structure"
-mkdir -p modules
 
 date_msg "Creating remote state Terraform provider/backend files."
 
 cd remote_state
 
+echo ${BUCKET_NAME} > .remote_state_bucket
 rm -rf .terraform .terraform.lock.hcl tfplan
 
 for FILE in *.jinja2; do
@@ -83,3 +80,4 @@ done
 
 terraform fmt
 date_msg "Terraform project configured"
+
