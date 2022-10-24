@@ -32,14 +32,17 @@ nuke_them_all () {
     terraform plan -out tfplan -destroy
     terraform apply -auto-approve tfplan
 
+    date_msg "Removing S3 bucket for remote state"
+    BUCKET_NAME=$(cat .remote_state_bucket)
+    aws s3 rb s3://${BUCKET_NAME}
+
     date_msg "Cleaning up dynamic providers and backends"
-    rm -f main.tf backend.tf providers.tf
+    rm -f remote_state.tf backend.tf providers.tf .remote_state_bucket
     cd ..
     rm -f main.tf backend.tf providers.tf
 
     date_msg "Environment destroyed"
 }
-
 
 date_msg "Cleaning up AWS environment"
 
