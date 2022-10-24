@@ -80,3 +80,4 @@ done
 
 terraform fmt
 date_msg "Terraform project configured"
+
