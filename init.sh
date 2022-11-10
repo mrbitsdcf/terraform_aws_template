@@ -17,6 +17,7 @@ TIMESTAMP=$(date +%F-%T)
 
 KEY_NAME="INVALID"
 PREFIX="INVALID"
+
 if [ "${KEYNAME}" == "INVALID" ] || [ "${PREFIX}" == "INVALID" ]; then
   date_msg "Please configure KEYNAME and PREFIX variables in this script"
   exit 255

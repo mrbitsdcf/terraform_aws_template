@@ -1,7 +1,9 @@
-variable "key" {}
+variable "rules" {
+  type        = list(map(string))
+  description = "Rules for backup policy"
+}
 
-variable "value" {}
-
-variable "rules" {}
-
-variable "backup_vault_name" {}
+variable "backup_vault_name" {
+  type        = string
+  description = "Name for Backup Vault"
+}

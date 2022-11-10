@@ -1,7 +1,3 @@
-key = "Backup"
-
-value = "True"
-
 backup_vault_name = "backup_vault"
 
 rules = [{
