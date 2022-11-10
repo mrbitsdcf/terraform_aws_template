@@ -42,10 +42,8 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_backup_vault_name"></a> [backup\_vault\_name](#input\_backup\_vault\_name) | n/a | `any` | n/a | yes |
-| <a name="input_key"></a> [key](#input\_key) | n/a | `any` | n/a | yes |
-| <a name="input_rules"></a> [rules](#input\_rules) | n/a | `any` | n/a | yes |
-| <a name="input_value"></a> [value](#input\_value) | n/a | `any` | n/a | yes |
+| <a name="input_backup_vault_name"></a> [backup\_vault\_name](#input\_backup\_vault\_name) | Name for Backup Vault | `string` | n/a | yes |
+| <a name="input_rules"></a> [rules](#input\_rules) | Rules for backup policy | `list(map(string))` | n/a | yes |
 
 ## Outputs
 
