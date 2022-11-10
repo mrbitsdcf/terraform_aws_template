@@ -2,7 +2,12 @@ resource "aws_s3_bucket" "remote_state" {
   bucket        = format("%s-%s-%s", local.prefix, local.aws_region, local.aws_account)
   force_destroy = true
 
-  tags = local.common_tags
+  tags = merge(
+    local.common_tags,
+    {
+      "Backup" = "True"
+    }
+  )
 }
 
 resource "aws_s3_bucket_public_access_block" "s3public_remote_state" {

@@ -34,7 +34,7 @@ nuke_them_all () {
 
     date_msg "Removing S3 bucket for remote state"
     BUCKET_NAME=$(cat .remote_state_bucket)
-    aws s3 rb s3://${BUCKET_NAME}
+    aws s3 rb --force s3://${BUCKET_NAME}
 
     date_msg "Cleaning up dynamic providers and backends"
     rm -f remote_state.tf backend.tf providers.tf .remote_state_bucket
