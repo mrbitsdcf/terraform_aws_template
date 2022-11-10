@@ -39,7 +39,7 @@ nuke_them_all () {
     date_msg "Cleaning up dynamic providers and backends"
     rm -f remote_state.tf backend.tf providers.tf .remote_state_bucket
     cd ..
-    rm -f main.tf backend.tf providers.tf
+    rm -f backend.tf providers.tf
 
     date_msg "Environment destroyed"
 }
