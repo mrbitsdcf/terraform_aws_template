@@ -16,8 +16,8 @@ resource "aws_iam_role_policy_attachment" "restore-service-aws-backup-role-polic
 
 resource "aws_kms_key" "aws_backup_key" {
   description             = "AWS Backup KMS key"
-  deletion_window_in_days = 7
-  enable_key_rotation     = false
+  deletion_window_in_days = 30
+  enable_key_rotation     = true
 }
 
 resource "aws_backup_vault" "backup-vault" {
