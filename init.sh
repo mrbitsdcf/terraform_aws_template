@@ -17,6 +17,7 @@ TIMESTAMP=$(date +%F-%T)
 
 KEY_NAME="INVALID"
 PREFIX="INVALID"
+CREATE_IAM_USER=1
 
 if [ "${KEYNAME}" == "INVALID" ] || [ "${PREFIX}" == "INVALID" ]; then
   date_msg "Please configure KEYNAME and PREFIX variables in this script"
@@ -57,9 +58,13 @@ done
 
 date_msg "Run remote state bucket/DynamoDB table preparation"
 
+if [[ $CREATE_IAM_USER == 0 ]]; then
+    TF_EXTRA_OPTIONS=-var=\"create_iam_service_user=true\"
+fi
+
 terraform fmt
 terraform init
-terraform plan -out tfplan
+terraform plan ${TF_EXTRA_OPTIONS} -out tfplan
 terraform apply -auto-approve tfplan
 
 DYNAMODB_TABLE=$(terraform output dynamodb-lock-table)
