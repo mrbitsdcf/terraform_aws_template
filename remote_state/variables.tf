@@ -9,7 +9,7 @@ variable "backup_vault_name" {
 }
 
 variable "create_iam_service_user" {
-  type        = boolean
+  type        = bool
   description = "Whether to create an IAM user with permissions in S3 bucket and DynamoDB table, to be used with IaC pipelines"
   default     = false
 }
