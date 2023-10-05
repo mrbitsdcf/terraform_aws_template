@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "remote_state" {
-  bucket        = format("%s-%s-%s", local.prefix, local.aws_region, local.aws_account)
+  bucket        = format("%s-%s-%s", local.main_project, local.aws_region, local.aws_account)
   force_destroy = true
 
   tags = merge(

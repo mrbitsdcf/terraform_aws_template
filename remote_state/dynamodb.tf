@@ -1,5 +1,5 @@
 resource "aws_dynamodb_table" "lock_table" {
-  name           = format("%s-dynamodb", local.prefix)
+  name           = format("%s-dynamodb", local.main_project)
   billing_mode   = "PROVISIONED"
   read_capacity  = 5
   write_capacity = 5

@@ -2,12 +2,14 @@
 ## Updated on: {{ timestamp }} ##
 
 locals {
-  aws_region  = "{{ aws_region }}"
-  aws_account = "{{ account_id }}"
-  prefix      = "{{ prefix }}"
-  ssm_prefix  = "/org/{{ prefix }}/terraform"
-  common_tags = {
-    Project   = "{{ prefix }}"
-    ManagedBy = "Terraform"
+  aws_region   = "{{ aws_region }}"
+  aws_account  = "{{ account_id }}"
+  prefix       = "{{ prefix }}"
+  ssm_prefix   = "/org/{{ main_project }}/terraform"
+  main_project = "{{ main_project }}"
+  pep          = "{{ pep }}"
+  common_tags  = {
+    Project    = "{{ pep }}"
+    ManagedBy  = "Terraform"
   }
 }

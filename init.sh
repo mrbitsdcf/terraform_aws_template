@@ -15,19 +15,24 @@ date_msg "Starting Terraform project configuration"
 
 TIMESTAMP=$(date +%F-%T)
 
-KEY_NAME="INVALID"
-PREFIX="INVALID"
-CREATE_IAM_USER=1
+KEY_NAME="remote-state-terraform" # remote state filename
+PREFIX="laf-remote-state-bootstrap"  # remote state project name
+MAIN_PROJECT="laf-terraform-state"
+PEP="coem001"
+CREATE_IAM_USER=0
+PROFILE="logicalis-aws-br"
 
 if [ "${KEYNAME}" == "INVALID" ] || [ "${PREFIX}" == "INVALID" ]; then
   date_msg "Please configure KEYNAME and PREFIX variables in this script"
   exit 255
 fi
 
+[[ $PROFILE ]] && AWSCLI_EXTRA_OPTS="--profile $PROFILE"
+
 AWS_ID=$(aws sts get-caller-identity)
-ACCOUNT_ID=$(aws sts get-caller-identity --query 'Account' --out text)
-[[ $AWS_REGION ]] || AWS_REGION=us-east-1
-BUCKET_NAME="remote-state-${AWS_REGION}-${ACCOUNT_ID}"
+ACCOUNT_ID=$(aws sts get-caller-identity --query 'Account' $AWSCLI_EXTRA_OPTS --out text)
+[[ $AWS_REGION ]] || AWS_REGION=sa-east-1
+BUCKET_NAME="${PREFIX}-${AWS_REGION}-${ACCOUNT_ID}"
 
 aws s3 ls s3://${BUCKET_NAME} --region=${AWS_REGION} >/dev/null 2>&1
 
@@ -53,14 +58,14 @@ for FILE in *.jinja2; do
       -D key_name=$KEY_NAME \
       -D account_id=$ACCOUNT_ID \
       -D prefix=$PREFIX \
+      -D main_project=$MAIN_PROJECT \
+      -D pep=$PEP \
       -o ./$DEST_FILE 1>/dev/null 2>&1
 done
 
 date_msg "Run remote state bucket/DynamoDB table preparation"
 
-if [[ $CREATE_IAM_USER == 0 ]]; then
-    TF_EXTRA_OPTIONS=-var=\"create_iam_service_user=true\"
-fi
+[[ $CREATE_IAM_USER == 1 ]] || TF_EXTRA_OPTIONS=-var="create_iam_service_user=true"
 
 terraform fmt
 terraform init
@@ -84,7 +89,7 @@ for FILE in *.jinja2; do
       -D timestamp="$TIMESTAMP" \
       -D aws_region=$AWS_REGION \
       -D bucket_name=$TFSTATE_BUCKET_NAME \
-      -D prefix=$PREFIX \
+      -D prefix=$PEP \
       -D dynamodb_table=$DYNAMODB_TABLE \
       -o ./$DEST_FILE 1>/dev/null 2>&1
 done

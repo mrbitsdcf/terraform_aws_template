@@ -5,7 +5,7 @@ terraform {
   backend "s3" {
     region = "{{ aws_region }}"
     bucket = {{ bucket_name }}
-    key= "{{ prefix }}-iac.tfstate"
+    key = "{{ prefix }}-iac/terraform.tfstate"
     encrypt = true
     dynamodb_table = {{ dynamodb_table }}
   }
